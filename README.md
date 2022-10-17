@@ -1,11 +1,6 @@
 # Sequence Modeling Benchmarks and Temporal Convolutional Networks (TCN)
 
-
-This repository contains the experiments done in the work [An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling](https://arxiv.org/abs/1803.01271) by Shaojie Bai, J. Zico Kolter and Vladlen Koltun.
-
-We specifically target a comprehensive set of tasks that have been repeatedly used to compare the effectiveness of different recurrent networks, and evaluate a simple, generic but powerful (purely) convolutional network on the recurrent nets' home turf.
-
-Experiments are done in PyTorch. If you find this repository helpful, please cite our work:
+This repository is a fork of [Temporal Convolutional Networks](https://github.com/locuslab/TCN/tree/master/TCN/adding_problem), which implements the methods/experiments of [An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling](https://arxiv.org/abs/1803.01271) by Shaojie Bai, J. Zico Kolter and Vladlen Koltun:
 
 ```
 @article{BaiTCN2018,
@@ -16,36 +11,51 @@ Experiments are done in PyTorch. If you find this repository helpful, please cit
 }
 ```
 
-## Domains and Datasets
+## Quadrant Sequence Experiment
 
-**Update**: The code should be directly runnable with PyTorch v1.0.0 or above (PyTorch v>1.3.0 strongly recommended). The older versions of PyTorch are no longer supported.
+To increase my own understanding, I've created this fork to add my own experiment that puts forward the following sequence prediction problem:
 
-This repository contains the benchmarks to the following tasks, with details explained in each sub-directory:
+Suppose there are coordinates $(x_1,y_1)$, $(x_2, y_2)$, ... $(x_n, y_n)$ that correspond to $n$ characters depending on which plane the coordinate resides in:
 
-  - **The Adding Problem** with various T (we evaluated on T=200, 400, 600)
-  - **Copying Memory Task** with various T (we evaluated on T=500, 1000, 2000)
-  - **Sequential MNIST** digit classification
-  - **Permuted Sequential MNIST** (based on Seq. MNIST, but more challenging)
-  - **JSB Chorales** polyphonic music
-  - **Nottingham** polyphonic music
-  - **PennTreebank** [SMALL] word-level language modeling (LM)
-  - **Wikitext-103** [LARGE] word-level LM
-  - **LAMBADA** [LARGE] word-level LM and textual understanding
-  - **PennTreebank** [MEDIUM] char-level LM
-  - **text8** [LARGE] char-level LM
+```
+A | C    A | C         A | C
+-----  , ----- , ... , ----
+B | ?    B | ?         B | ?
+```
 
-While some of the large datasets are not included in this repo, we use the [observations](https://github.com/edwardlib/observations) package to download them, which can be easily installed using pip. 
+So that this can't be a perfect prediction (0 loss), for the 4th quadrant denoted by "?", there is an equal probability of being one of A, B, or C of the coordinate is there.
+
+For example:
+
+${(x1,y1), (x2,y2), (x3,y3)} = {(-1,-2), (-4,5), (3,3)} =$ BAC
+
+${(x1,y1), (x2,y2), (x3,y3)} = {(-1,-2), (-4,5), (3,-3)} =$ BA[one of {A,B,C}]
+
+
+## Setup
+
+Create and activate a Python 3.8 virtual environment using [pyenv](https://github.com/pyenv/pyenv-virtualenv):
+```
+pyenv install -v 3.8.14
+pyenv virtualenv 3.8.14 tcn-3.8.14
+pyenv activate tcn-3.8.14
+```
+
+Install requirements via [Poetry](https://python-poetry.org/):
+```
+poetry install
+```
 
 ## Usage
 
-Each task is contained in its own directory, with the following structure:
+The TCN model can and does learn to improve predictions on the sequences:
 
 ```
-[TASK_NAME] /
-    data/
-    [TASK_NAME]_test.py
-    models.py
-    utils.py
+poetry run python quadrant_test.py
 ```
 
-To run TCN model on the task, one only need to run `[TASK_NAME]_test.py` (e.g. `add_test.py`). To tune the hyperparameters, one can specify via argument options, which can been seen via the `-h` flag. 
+### Sample Output:
+
+```
+TODO
+```
