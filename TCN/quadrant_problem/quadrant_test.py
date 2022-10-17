@@ -144,7 +144,7 @@ def evaluate():
         print("\nTest set: Average loss: {:.6f}\n".format(test_loss.item()))
         return test_loss.item()
 
-
-for ep in range(1, epochs + 1):
-    train(ep)
-    tloss = evaluate()
+if __name__ == "__main__":
+    for ep in range(1, epochs + 1):
+        train(ep)
+        tloss = evaluate()
