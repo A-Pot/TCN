@@ -1,5 +1,4 @@
 import torch
-import argparse
 import torch.optim as optim
 import torch.nn.functional as F
 import sys
@@ -7,45 +6,28 @@ sys.path.append("../../")
 from TCN.adding_problem.model import TCN
 from TCN.adding_problem.utils import data_generator
 
-parser = argparse.ArgumentParser(description='Sequence Modeling - The Adding Problem')
-parser.add_argument('--batch_size', type=int, default=32, metavar='N',
-                    help='batch size (default: 32)')
-parser.add_argument('--cuda', action='store_false',
-                    help='use CUDA (default: True)')
-parser.add_argument('--dropout', type=float, default=0.0,
-                    help='dropout applied to layers (default: 0.0)')
-parser.add_argument('--clip', type=float, default=-1,
-                    help='gradient clip, -1 means no clip (default: -1)')
-parser.add_argument('--epochs', type=int, default=10,
-                    help='upper epoch limit (default: 10)')
-parser.add_argument('--ksize', type=int, default=7,
-                    help='kernel size (default: 7)')
-parser.add_argument('--levels', type=int, default=8,
-                    help='# of levels (default: 8)')
-parser.add_argument('--seq_len', type=int, default=400,
-                    help='sequence length (default: 400)')
-parser.add_argument('--log-interval', type=int, default=100, metavar='N',
-                    help='report interval (default: 100')
-parser.add_argument('--lr', type=float, default=4e-3,
-                    help='initial learning rate (default: 4e-3)')
-parser.add_argument('--optim', type=str, default='Adam',
-                    help='optimizer to use (default: Adam)')
-parser.add_argument('--nhid', type=int, default=30,
-                    help='number of hidden units per layer (default: 30)')
-parser.add_argument('--seed', type=int, default=1111,
-                    help='random seed (default: 1111)')
-args = parser.parse_args()
+# Removed argparse so it's a easier to step through in an interactive environment
+batch_size = 2
+cuda = True # Assumes GPU is available
+dropout = 0.0
+clip = 1
+epochs = 10
+ksize = 2
+levels = 8
+seq_len = 400
+log_interval = 100
+lr = 4e-3
+optimizer_type = 'Adam'
+nhid = 30
+seed = 1111
 
-torch.manual_seed(args.seed)
+torch.manual_seed(seed)
 if torch.cuda.is_available():
-    if not args.cuda:
+    if not cuda:
         print("WARNING: You have a CUDA device, so you should probably run with --cuda")
 
 input_channels = 2
 n_classes = 1
-batch_size = args.batch_size
-seq_length = args.seq_len
-epochs = args.epochs
 
 print(args)
 print("Producing data...")
