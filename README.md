@@ -11,9 +11,9 @@ This repository is a fork of [Temporal Convolutional Networks](https://github.co
 }
 ```
 
-## Quadrant Sequence Experiment
+## Quadrant Problem Experiment
 
-To increase my own understanding, I've created this fork to add my own experiment that puts forward the following sequence prediction problem:
+To help my understanding, I've created this fork to add my own additional experiment that puts forward the following sequence prediction problem:
 
 Suppose there are coordinates $(x_1,y_1)$, $(x_2, y_2)$, ... $(x_n, y_n)$ that correspond to $n$ characters depending on which plane the coordinate resides in:
 
@@ -23,7 +23,7 @@ A | C    A | C         A | C
 B | ?    B | ?         B | ?
 ```
 
-So that this can't be a perfect prediction (0 loss), for the 4th quadrant denoted by "?", there is an equal probability of being one of A, B, or C of the coordinate is there.
+To prevent the possibility of perfect prediction, the 4th quadrant is denoted by "?". If the coordinate resides there, there is an equal probability of being one of A, B, or C.
 
 For example:
 
