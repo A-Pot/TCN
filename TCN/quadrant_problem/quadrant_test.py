@@ -5,7 +5,7 @@ import numpy as np
 import sys
 
 sys.path.append("../../")
-from TCN.adding_problem.model import TCN
+from TCN.quadrant_problem.model import TCN
 
 # Removed argparse so it's a easier to step through in an interactive environment
 batch_size = 2
