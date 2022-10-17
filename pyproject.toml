@@ -1,0 +1,10 @@
+[tool.poetry]
+name = "TCN-fork"
+version = "1.0.0"
+description = "Quadrant example solved via TCN"
+authors = ["Aaron Potvien"]
+
+[tool.poetry.dependencies]
+numpy = "^1.21.6"
+python = "^3.8"
+torch = "^1.12.1"
