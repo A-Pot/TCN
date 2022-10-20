@@ -57,26 +57,26 @@ poetry run python quadrant_test.py
 ### Sample Output:
 
 ```
-Train Epoch:  1 [   198/   800 (25%)]   Learning rate: 0.0040   Loss: 1.022202
-Train Epoch:  1 [   398/   800 (50%)]   Learning rate: 0.0040   Loss: 0.608966
-Train Epoch:  1 [   598/   800 (75%)]   Learning rate: 0.0040   Loss: 0.510911
-Train Epoch:  1 [   798/   800 (100%)]  Learning rate: 0.0040   Loss: 0.386826
+Train Epoch:  1 [   198/   800 (25%)]   Learning rate: 0.0040   Loss: 1.030636
+Train Epoch:  1 [   398/   800 (50%)]   Learning rate: 0.0040   Loss: 0.832494
+Train Epoch:  1 [   598/   800 (75%)]   Learning rate: 0.0040   Loss: 0.692009
+Train Epoch:  1 [   798/   800 (100%)]  Learning rate: 0.0040   Loss: 0.701636
 
-Test set: Average loss: 0.434732
+Test set: Average loss: 0.609160
 
-Train Epoch:  2 [   198/   800 (25%)]   Learning rate: 0.0040   Loss: 0.367880
-Train Epoch:  2 [   398/   800 (50%)]   Learning rate: 0.0040   Loss: 0.316921
-Train Epoch:  2 [   598/   800 (75%)]   Learning rate: 0.0040   Loss: 0.322155
-Train Epoch:  2 [   798/   800 (100%)]  Learning rate: 0.0040   Loss: 0.286899
+Train Epoch:  2 [   198/   800 (25%)]   Learning rate: 0.0040   Loss: 0.615945
+Train Epoch:  2 [   398/   800 (50%)]   Learning rate: 0.0040   Loss: 0.573940
+Train Epoch:  2 [   598/   800 (75%)]   Learning rate: 0.0040   Loss: 0.496575
+Train Epoch:  2 [   798/   800 (100%)]  Learning rate: 0.0040   Loss: 0.528395
 
-Test set: Average loss: 0.320079
+Test set: Average loss: 0.533496
 
 ...
 
-Train Epoch: 10 [   198/   800 (25%)]   Learning rate: 0.0040   Loss: 0.232142
-Train Epoch: 10 [   398/   800 (50%)]   Learning rate: 0.0040   Loss: 0.212543
-Train Epoch: 10 [   598/   800 (75%)]   Learning rate: 0.0040   Loss: 0.218244
-Train Epoch: 10 [   798/   800 (100%)]  Learning rate: 0.0040   Loss: 0.224373
+Train Epoch: 10 [   198/   800 (25%)]   Learning rate: 0.0040   Loss: 0.311580
+Train Epoch: 10 [   398/   800 (50%)]   Learning rate: 0.0040   Loss: 0.314201
+Train Epoch: 10 [   598/   800 (75%)]   Learning rate: 0.0040   Loss: 0.255762
+Train Epoch: 10 [   798/   800 (100%)]  Learning rate: 0.0040   Loss: 0.355394
 
-Test set: Average loss: 0.249233
+Test set: Average loss: 0.392151
 ```
