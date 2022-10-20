@@ -1,6 +1,6 @@
 import torch
 import torch.optim as optim
-import torch.nn.functional as F
+import torch.nn as nn
 import numpy as np
 import sys
 
@@ -27,25 +27,26 @@ if torch.cuda.is_available():
     if not cuda:
         print("WARNING: You have a CUDA device, so you should probably run with --cuda")
 
-input_channels = 1
-n_classes = seq_len
+n_classes = 3  # For A, B, C
+input_size = 1  # Because coordinate pairs will be flattened into 1D
+output_size = seq_len * n_classes  # The length of the model's final linear layer
 num_train_samples = 800
 num_test_samples = 200
-LOW, HIGH = -20, 20  # Bounds for uniform ints
+LOW, HIGH = -20, 20  # Bounds for uniform floats
 
 
-def random_int_generator():
+def random_unif_generator():
     while True:
-        yield np.random.randint(LOW, HIGH)
+        yield np.random.uniform(LOW, HIGH)
 
 
-rng = random_int_generator()
+rng = random_unif_generator()
 
 cat_to_num = {
-    "A": 1.0,
-    "B": 2.0,
-    "C": 3.0,
-}  # First pass mapping to floats like the adding problem
+    "A": 0,
+    "B": 1,
+    "C": 2,
+}
 
 
 def get_random_xy():
@@ -84,10 +85,10 @@ X_train = X_train[:, None, :]
 X_test = X_test[:, None, :]
 
 # Note: We use a very simple setting here (assuming all levels have the same # of channels.
-channel_sizes = [nhid] * levels
+channel_sizes = [nhid] * levels  # [30, 30, 30, 30, 30, 30, 30, 30]
 kernel_size = ksize
 model = TCN(
-    input_channels, n_classes, channel_sizes, kernel_size=kernel_size, dropout=dropout
+    input_size, output_size, channel_sizes, kernel_size=kernel_size, dropout=dropout
 )
 
 if cuda:
@@ -97,6 +98,7 @@ if cuda:
     X_test = X_test.cuda()
     y_test = y_test.cuda()
 
+criterion = nn.CrossEntropyLoss()
 optimizer = getattr(optim, optimizer_type)(model.parameters(), lr=lr)
 
 
@@ -112,7 +114,10 @@ def train(epoch):
             x, y = X_train[i : (i + batch_size)], y_train[i : (i + batch_size)]
         optimizer.zero_grad()
         output = model(x)
-        loss = F.mse_loss(output, y)
+        output_reshaped = output.reshape(
+            x.size(0), n_classes, seq_len
+        )  # Represents probability distribution
+        loss = criterion(output_reshaped, y)
         loss.backward()
         if clip > 0:
             torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
@@ -140,9 +145,13 @@ def evaluate():
     model.eval()
     with torch.no_grad():
         output = model(X_test)
-        test_loss = F.mse_loss(output, y_test)
+        output_reshaped = output.reshape(
+            X_test.size(0), n_classes, seq_len
+        )  # Represents probability distribution
+        test_loss = criterion(output_reshaped, y_test)
         print("\nTest set: Average loss: {:.6f}\n".format(test_loss.item()))
         return test_loss.item()
+
 
 if __name__ == "__main__":
     for ep in range(1, epochs + 1):
