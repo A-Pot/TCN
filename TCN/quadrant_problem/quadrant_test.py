@@ -114,7 +114,7 @@ def train(epoch):
             x, y = X_train[i : (i + batch_size)], y_train[i : (i + batch_size)]
         optimizer.zero_grad()
         output = model(x)
-        output_reshaped = output.reshape(
+        output_reshaped = output.view(
             x.size(0), n_classes, seq_len
         )  # Represents probability distribution
         loss = criterion(output_reshaped, y)
@@ -145,7 +145,7 @@ def evaluate():
     model.eval()
     with torch.no_grad():
         output = model(X_test)
-        output_reshaped = output.reshape(
+        output_reshaped = output.view(
             X_test.size(0), n_classes, seq_len
         )  # Represents probability distribution
         test_loss = criterion(output_reshaped, y_test)
